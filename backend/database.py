@@ -21,11 +21,9 @@ Base = declarative_base()
 def get_db():
     db = SessionLocal()
     try:
-        with engine.connect() as connection:
-            print("Database connected successfully")
-    except Exception as e:
-        print(f"Connection failed: {e}")
+        yield db
+    finally:
+        db.close()
 
-engine.connect()
-print("Database connected successfully")
+
 
