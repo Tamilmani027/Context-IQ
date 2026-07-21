@@ -80,6 +80,8 @@ def process_insights():
                 book.genre = genre
                 db.add(book)
                 db.commit()
+                db.refresh(book)
+                print(f"Saved summary: '{book.summary[:50] if book.summary else 'EMPTY'}'")
                 processed += 1
             except Exception as e:
                 db.rollback()
@@ -90,13 +92,6 @@ def process_insights():
         db.close()
 
 
-def test_summary():
-    desc = "A collection of poems that are funny and strange, perfect for children and adults alike."
-    result = generate_summary(desc)
-    print(f"Result: '{result}'")
-    print(f"Length: {len(result)}")
-
 
 if __name__ == "__main__":
-    test_summary()
-    # process_insights()
+    process_insights()
