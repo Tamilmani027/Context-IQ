@@ -54,7 +54,7 @@ def generate_answer(question: str, context_chunks: List[str], book_ids: List[int
     payload = {
         "model": "mistralai/mistral-7b-instruct-v0.3",
         "messages": [
-    				{"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},],
+                    {"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},],
         "temperature": 0.7,
         "max_tokens": 500,
     }
@@ -66,9 +66,6 @@ def generate_answer(question: str, context_chunks: List[str], book_ids: List[int
         answer_text = data["choices"][0]["message"]["content"]
     except Exception as e:
         # If the LM call fails or returns unexpected shape, fall back to an informative message
-    		print(f"LM Studio error: {e}")
-    		print(f"Response status: {resp.status_code}")
-    		print(f"Response body: {resp.text}")
-    		answer_text = "Could not get an answer from the language model."
+        answer_text = "Could not get an answer from the language model."
 
     return {"answer": answer_text, "source_books": source_books}

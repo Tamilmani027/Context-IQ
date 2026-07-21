@@ -10,7 +10,7 @@ export default async function BookDetail({ params }) {
   return (
     <div>
         {/* Back button */}
-        <Link href="/">
+        <Link href="/books">
           <span className="text-blue-400 hover:text-blue-300 transition-colors cursor-pointer mb-8 inline-block">
             ← Back to Books
           </span>
