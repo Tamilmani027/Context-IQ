@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geist.className} bg-gray-950 min-h-screen`}>
+      <body className={`${geist.className} bg-[#FAFAFA] min-h-screen`}>
         <Navbar />
         <main className="max-w-7xl mx-auto px-8 py-8">
           {children}

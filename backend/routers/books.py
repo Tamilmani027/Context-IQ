@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -42,7 +42,42 @@ def upload_book(book:BookBase,db:Session=Depends(get_db)):
     db.add(new_book)
     db.commit()
     db.refresh(new_book)
-    return new_book    
+    return new_book   
+
+@router.post("/upload-pdf")
+async def upload_pdf(
+    file: UploadFile,
+    db: Session = Depends(get_db)
+):
+    # Step 1 - read file bytes
+    contents = await file.read()
+    
+    # Step 2 - extract text
+    text = extract_pdf_text(contents)
+    
+    # Step 3 - create a Book record
+    book = Book(
+        title=file.filename, 
+        description=text,
+        price=0.0,
+        rating=0,
+        url="",
+        upc="",
+        availability=""
+    )
+    db.add(book)
+    db.commit()
+    
+    # Step 4 - run same pipeline you built
+    chunks = chunk_text(text)
+    embeddings = generate_embeddings(chunks)
+    chunk_ids = [f"book_{book.id}_chunk_{i}" 
+                 for i in range(len(chunks))]
+    store_book_embeddings(book.id, chunks, 
+                         embeddings, chunk_ids)
+    
+    return {"message": "PDF processed", 
+            "book_id": book.id} 
 
 
 

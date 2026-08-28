@@ -7,4 +7,7 @@ pydantic-settings
 chromadb
 sentence-transformers
 requests
- 
+pymupdf
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart

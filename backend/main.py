@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import books, qa
+from routers import books, qa, auth
 app=FastAPI(title='Context-IQ')
 
 app.add_middleware(CORSMiddleware,
@@ -12,6 +12,7 @@ allow_headers=["*"]
 
 app.include_router(books.router)
 app.include_router(qa.router)
+app.include_router(auth.router)
 
 @app.get("/api/hello")
 def hello():

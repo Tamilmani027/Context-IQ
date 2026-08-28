@@ -1,5 +1,15 @@
-from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey, DateTime, Boolean
+from sqlalchemy.sql import func
 from database import Base, engine
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String(256), unique=True, nullable=False, index=True)
+    hashed_password = Column(String(512), nullable=False)
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    is_active = Column(Boolean, default=True, nullable=False)
 
 class Book(Base):
     __tablename__ = "books"
@@ -26,3 +36,5 @@ class BookChunk(Base):
     chroma_id = Column(String(128), nullable=False)
 
 Base.metadata.create_all(bind=engine)
+
+

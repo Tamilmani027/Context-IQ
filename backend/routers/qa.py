@@ -4,13 +4,19 @@ from sqlalchemy.orm import Session
 from schemas import QuestionRequest
 from database import get_db
 from services.llm import query_chromadb, generate_answer
+from auth import get_current_user
+from models import User
 
 
 router = APIRouter(prefix="/api", tags=["qa"])
 
 
 @router.post("/ask")
-def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
+def ask_question(
+    request: QuestionRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     # Retrieve relevant chunks from ChromaDB
     results = query_chromadb(request.question)
 
