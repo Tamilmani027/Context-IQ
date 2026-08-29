@@ -31,14 +31,14 @@ export default function Navbar() {
         router.push("/");
     }
 
+    // Hide navbar on auth pages
+    if (pathname?.startsWith("/auth")) return null;
+
     return (
         <nav className="w-full bg-[#FAFAFA] px-8 py-4 flex items-center justify-between border-b border-gray-100">
             {/* App name - Left side */}
             <Link href="/">
                 <div className="flex items-center gap-2 cursor-pointer">
-                    <div className="bg-indigo-500 text-white p-1.5 rounded-lg flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-book"><path d="M4 19.5v-15A2.5 2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 2.5 0 0 1 0-5H20"/></svg>
-                    </div>
                     <span className="text-gray-900 text-xl font-bold font-serif tracking-tight">
                         Context-IQ
                     </span>

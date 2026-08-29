@@ -29,11 +29,16 @@ class UserCreate(BaseModel):
     email: str
     password: str
 
+class OAuthUserCreate(BaseModel):
+    email: str
+    auth_provider: str
+
 class UserResponse(BaseModel):
     id: int
     email: str
     created_at: datetime
     is_active: bool
+    auth_provider: Optional[str] = None
 
     class Config:
         from_attributes = True

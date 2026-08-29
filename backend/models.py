@@ -7,7 +7,8 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(256), unique=True, nullable=False, index=True)
-    hashed_password = Column(String(512), nullable=False)
+    hashed_password = Column(String(512), nullable=True)
+    auth_provider = Column(String(32), nullable=True)
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
 
