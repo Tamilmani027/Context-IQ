@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function AuthNavbar() {
@@ -10,7 +11,15 @@ export default function AuthNavbar() {
     return (
         <nav className="auth-navbar">
             <Link href="/" className="auth-navbar-brand">
-                <span className="auth-navbar-title">Context-IQ</span>
+                <Image
+                    src="/context-iq-logo.svg"
+                    alt="Context-IQ"
+                    width={80}
+                    height={80}
+                    className="h-10 w-auto object-contain"
+                    style={{ height: "50px", width: "auto" }}
+                    priority
+                />
             </Link>
 
             <div className="auth-navbar-links">

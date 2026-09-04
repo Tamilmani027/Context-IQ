@@ -10,19 +10,33 @@ from database import get_db
 from models import User
 from auth import create_access_token
 
+from dotenv import load_dotenv
+
 router = APIRouter(prefix="/api/auth", tags=["oauth"])
 
-# ── Config ────────────────────────────────────────────
+env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+def _get_env(key: str, default: str = "") -> str:
+    load_dotenv(dotenv_path=env_path, override=True)
+    val = os.getenv(key, default)
+    return val.strip().strip("'\"") if val else default
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "http://localhost:8000/api/auth/google/callback")
+def get_frontend_url() -> str:
+    return _get_env("FRONTEND_URL", "http://localhost:3000")
 
-LINKEDIN_CLIENT_ID = os.getenv("LINKEDIN_CLIENT_ID", "")
-LINKEDIN_CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET", "")
-LINKEDIN_REDIRECT_URI = os.getenv("LINKEDIN_REDIRECT_URI", "http://localhost:8000/api/auth/linkedin/callback")
+def get_google_config():
+    return {
+        "client_id": _get_env("GOOGLE_CLIENT_ID"),
+        "client_secret": _get_env("GOOGLE_CLIENT_SECRET"),
+        "redirect_uri": _get_env("GOOGLE_REDIRECT_URI", "http://localhost:8000/api/auth/google/callback"),
+    }
+
+def get_linkedin_config():
+    return {
+        "client_id": _get_env("LINKEDIN_CLIENT_ID"),
+        "client_secret": _get_env("LINKEDIN_CLIENT_SECRET"),
+        "redirect_uri": _get_env("LINKEDIN_REDIRECT_URI", "http://localhost:8000/api/auth/linkedin/callback"),
+    }
 
 
 # ── Helpers ───────────────────────────────────────────
@@ -48,13 +62,13 @@ def _get_or_create_oauth_user(db: Session, email: str, provider: str) -> User:
 def _build_error_redirect(error_msg: str) -> RedirectResponse:
     """Redirect to frontend callback with error message."""
     params = urlencode({"error": error_msg})
-    return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?{params}")
+    return RedirectResponse(url=f"{get_frontend_url()}/auth/callback?{params}")
 
 
 def _build_success_redirect(token: str) -> RedirectResponse:
     """Redirect to frontend callback with JWT token."""
     params = urlencode({"token": token})
-    return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?{params}")
+    return RedirectResponse(url=f"{get_frontend_url()}/auth/callback?{params}")
 
 
 # ══════════════════════════════════════════════════════
@@ -64,12 +78,13 @@ def _build_success_redirect(token: str) -> RedirectResponse:
 @router.get("/google")
 def google_login():
     """Redirect user to Google's OAuth 2.0 consent screen."""
-    if not GOOGLE_CLIENT_ID:
+    cfg = get_google_config()
+    if not cfg["client_id"]:
         raise HTTPException(status_code=500, detail="Google OAuth is not configured. Set GOOGLE_CLIENT_ID in .env")
 
     params = urlencode({
-        "client_id": GOOGLE_CLIENT_ID,
-        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "client_id": cfg["client_id"],
+        "redirect_uri": cfg["redirect_uri"],
         "response_type": "code",
         "scope": "openid email profile",
         "access_type": "offline",
@@ -87,15 +102,17 @@ def google_callback(code: str = None, error: str = None, db: Session = Depends(g
     if not code:
         return _build_error_redirect("No authorization code received from Google")
 
+    cfg = get_google_config()
+
     # Exchange code for tokens
     try:
         token_response = httpx.post(
             "https://oauth2.googleapis.com/token",
             data={
                 "code": code,
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uri": GOOGLE_REDIRECT_URI,
+                "client_id": cfg["client_id"],
+                "client_secret": cfg["client_secret"],
+                "redirect_uri": cfg["redirect_uri"],
                 "grant_type": "authorization_code",
             },
             headers={"Content-Type": "application/x-www-form-urlencoded"},
@@ -138,13 +155,14 @@ def google_callback(code: str = None, error: str = None, db: Session = Depends(g
 @router.get("/linkedin")
 def linkedin_login():
     """Redirect user to LinkedIn's OAuth 2.0 consent screen."""
-    if not LINKEDIN_CLIENT_ID:
+    cfg = get_linkedin_config()
+    if not cfg["client_id"]:
         raise HTTPException(status_code=500, detail="LinkedIn OAuth is not configured. Set LINKEDIN_CLIENT_ID in .env")
 
     params = urlencode({
         "response_type": "code",
-        "client_id": LINKEDIN_CLIENT_ID,
-        "redirect_uri": LINKEDIN_REDIRECT_URI,
+        "client_id": cfg["client_id"],
+        "redirect_uri": cfg["redirect_uri"],
         "scope": "openid profile email",
     })
     return RedirectResponse(url=f"https://www.linkedin.com/oauth/v2/authorization?{params}")
@@ -159,6 +177,8 @@ def linkedin_callback(code: str = None, error: str = None, db: Session = Depends
     if not code:
         return _build_error_redirect("No authorization code received from LinkedIn")
 
+    cfg = get_linkedin_config()
+
     # Exchange code for access token
     try:
         token_response = httpx.post(
@@ -166,9 +186,9 @@ def linkedin_callback(code: str = None, error: str = None, db: Session = Depends
             data={
                 "grant_type": "authorization_code",
                 "code": code,
-                "client_id": LINKEDIN_CLIENT_ID,
-                "client_secret": LINKEDIN_CLIENT_SECRET,
-                "redirect_uri": LINKEDIN_REDIRECT_URI,
+                "client_id": cfg["client_id"],
+                "client_secret": cfg["client_secret"],
+                "redirect_uri": cfg["redirect_uri"],
             },
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             timeout=10.0,

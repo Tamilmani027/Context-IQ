@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getMe, logoutUser } from "@/lib/api";
@@ -35,13 +36,18 @@ export default function Navbar() {
     if (pathname?.startsWith("/auth")) return null;
 
     return (
-        <nav className="w-full bg-[#FAFAFA] px-8 py-4 flex items-center justify-between border-b border-gray-100">
+        <nav className="w-full bg-[#FAFAFA] px-8 pt-4 pb-2 flex items-center justify-between border-b border-gray-100">
             {/* App name - Left side */}
             <Link href="/">
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <span className="text-gray-900 text-xl font-bold font-serif tracking-tight">
-                        Context-IQ
-                    </span>
+                <div className="flex items-center cursor-pointer">
+                    <Image
+                        src="/context-iq-logo.svg"
+                        alt="Context-IQ"
+                        width={80}
+                        height={80}
+                        className="h-20 w-auto object-contain"
+                        priority
+                    />
                 </div>
             </Link>
 
