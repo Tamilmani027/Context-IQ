@@ -134,7 +134,7 @@ export default function LoginPage() {
                             />
                             <span>Remember me</span>
                         </label>
-                        <Link href="#" className="forgot-link">Forgot password?</Link>
+                        <Link href="/auth/forgot-password" className="forgot-link">Forgot password?</Link>
                     </div>
 
                     {error && (

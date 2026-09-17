@@ -30,9 +30,9 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-xl p-8 shadow-2xl">
-        <h1 className="text-2xl font-semibold text-white mb-6 text-center">Upload Document</h1>
+    <div className="flex min-h-[calc(100vh-10rem)] items-center justify-center bg-zinc-950 p-4 sm:p-6">
+      <div className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-5 shadow-2xl sm:p-8">
+        <h1 className="mb-6 text-center text-2xl font-semibold text-white">Upload Document</h1>
         
         <div className="space-y-6">
           <div className="flex flex-col gap-2">

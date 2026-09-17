@@ -24,12 +24,12 @@ export default function AskPage() {
   }
 
   return (
-    <div>
-      <h1 className="text-white text-3xl font-bold mb-2">Ask AI About Books</h1>
-      <p className="text-gray-400 mb-6">Ask anything about the books in our collection.</p>
+    <div className="mx-auto max-w-4xl min-w-0">
+      <h1 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">Ask AI About Books</h1>
+      <p className="mb-6 text-gray-500">Ask anything about the books in our collection.</p>
 
       {/* Question Input Card */}
-      <div className="bg-gray-800 rounded-xl p-6">
+      <div className="rounded-xl bg-gray-800 p-4 sm:p-6">
         <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -50,7 +50,7 @@ export default function AskPage() {
       {answer && (
         <div className="bg-gray-800 rounded-xl p-6 mt-6">
           <h2 className="text-white font-semibold text-lg mb-3">Answer</h2>
-          <p className="text-gray-300 whitespace-pre-wrap">{answer.answer}</p>
+          <p className="break-words whitespace-pre-wrap text-gray-300">{answer.answer}</p>
 
           {/* Source Books */}
           {answer.source_books && answer.source_books.length > 0 && (
@@ -60,7 +60,7 @@ export default function AskPage() {
                 {answer.source_books.map((book, i) => (
                   <span
                     key={i}
-                    className="bg-blue-600/20 text-blue-400 text-sm px-3 py-1 rounded-full"
+                    className="max-w-full break-words rounded-full bg-blue-600/20 px-3 py-1 text-sm text-blue-400"
                   >
                     {book}
                   </span>

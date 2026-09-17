@@ -14,10 +14,10 @@ export default function AuthNavbar() {
                 <Image
                     src="/context-iq-logo.svg"
                     alt="Context-IQ"
-                    width={80}
-                    height={80}
-                    className="h-10 w-auto object-contain"
-                    style={{ height: "50px", width: "auto" }}
+                    width={100}
+                    height={100}
+                    className="h-20 w-auto object-contain"
+                    style={{ height: "100px", width: "auto" }}
                     priority
                 />
             </Link>

@@ -23,7 +23,7 @@ export default function BookCard({ book }) {
 
   return (
     <Link href={`/books/${book.id}`}>
-      <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer h-full flex flex-col">
+      <div className="flex h-full min-w-0 flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6">
         {/* Genre Badge */}
         {book.genre && (
           <div className="mb-4">
@@ -34,7 +34,7 @@ export default function BookCard({ book }) {
         )}
 
         {/* Title */}
-        <h2 className="text-gray-900 font-bold text-lg font-serif mb-1 line-clamp-2">
+          <h2 className="mb-1 break-words font-serif text-lg font-bold text-gray-900 line-clamp-2">
           {book.title}
         </h2>
 
@@ -49,11 +49,7 @@ export default function BookCard({ book }) {
           <span className="text-gray-400 text-xs">{book.rating}/5</span>
         </div>
         
-        {/* Price */}
-        <p className="text-gray-900 font-bold mb-3">
-          £{book.price}
-        </p>
-
+      
         {/* Description */}
         {book.description && (
           <p className="text-gray-500 text-sm line-clamp-3 mt-auto">

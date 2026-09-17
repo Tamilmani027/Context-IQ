@@ -27,7 +27,7 @@ export default async function BookDetail({ params }) {
   ));
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl min-w-0">
         {/* Back button */}
         <Link href="/books">
           <div className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer mb-6 text-sm font-medium">
@@ -48,7 +48,7 @@ export default async function BookDetail({ params }) {
           )}
 
           {/* Title */}
-          <h1 className="text-gray-900 text-4xl font-bold font-serif mb-2">
+          <h1 className="mb-2 break-words font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
             {book.title}
           </h1>
 
@@ -58,7 +58,7 @@ export default async function BookDetail({ params }) {
           </p>
 
           {/* Rating, Price, Reviews */}
-          <div className="flex items-center gap-2 text-gray-500 text-sm">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-500">
             <div className="flex">{stars}</div>
             <span>{book.rating}/5</span>
             <span>-</span>
@@ -70,7 +70,7 @@ export default async function BookDetail({ params }) {
 
         <div className="space-y-6">
           {/* Description Card */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-8">
             <h2 className="text-gray-900 font-bold font-serif text-xl mb-4">
               Description
             </h2>
@@ -80,15 +80,15 @@ export default async function BookDetail({ params }) {
           </div>
 
           {/* Book Info Card */}
-          <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-8">
             <h2 className="text-gray-900 font-bold font-serif text-xl mb-6">
               Book Info
             </h2>
             
-            <div className="grid grid-cols-4 gap-8 mb-8">
+            <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
               <div>
                 <div className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">UPC</div>
-                <div className="text-gray-700 text-sm">{book.upc || "-"}</div>
+                <div className="break-all text-gray-700 text-sm">{book.upc || "-"}</div>
               </div>
               <div>
                 <div className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Availability</div>
@@ -118,7 +118,7 @@ export default async function BookDetail({ params }) {
           </div>
 
           {/* AI Summary Card */}
-          <div className="bg-purple-50/50 rounded-2xl p-6 border border-purple-100 shadow-sm">
+          <div className="rounded-2xl border border-purple-100 bg-purple-50/50 p-5 shadow-sm sm:p-6">
             <div className="flex items-center gap-2 mb-3 text-indigo-500">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
               <h2 className="font-bold text-lg">AI Summary</h2>

@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 32px 8px;
+    padding: 12px 24px;
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -77,13 +77,14 @@
 /* ── Login & Register Page Wrappers ──────────────────── */
 .login-page-wrapper,
 .register-page-wrapper {
-    position: fixed;
-    inset: 0;
+    position: relative;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 50;
-    padding: 120px 1rem 20px;
+    padding: 96px 1rem 24px;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -118,7 +119,7 @@
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 24px;
-    padding: 40px 36px 32px;
+    padding: 24px 36px 20px;
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.08),
         0 2px 8px rgba(0, 0, 0, 0.04),
@@ -153,7 +154,7 @@
     font-size: 0.9rem;
     color: #6b7280;
     text-align: center;
-    margin: 0 0 24px;
+    margin: 0 0 16px;
 }
 
 /* ── Social Buttons ──────────────────────────────────── */
@@ -161,7 +162,7 @@
     display: flex;
     gap: 12px;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .social-btn {
@@ -194,7 +195,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 }
 
 .login-divider-line,
@@ -217,11 +218,7 @@
 .register-form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-}
-
-.register-form {
-    gap: 16px;
+    gap: 12px;
 }
 
 .form-group {
@@ -439,9 +436,14 @@
 /* ── Responsiveness ──────────────────────────────────── */
 @media (max-width: 480px) {
 
+    .login-page-wrapper,
+    .register-page-wrapper {
+        padding: 76px 12px 20px;
+    }
+
     .login-card,
     .register-card {
-        padding: 28px 18px 24px;
+        padding: 24px 18px 20px;
         border-radius: 20px;
     }
 
@@ -450,11 +452,24 @@
     }
 
     .auth-navbar {
-        padding: 0;
+        padding: 8px 12px;
+    }
+
+    .auth-navbar-brand img {
+        height: 52px !important;
     }
 
     .auth-navbar-link {
         padding: 6px 12px;
         font-size: 0.8rem;
+    }
+
+    .auth-navbar-links {
+        gap: 2px;
+    }
+
+    .form-options {
+        flex-wrap: wrap;
+        gap: 8px;
     }
 }

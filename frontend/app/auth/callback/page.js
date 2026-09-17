@@ -68,6 +68,7 @@ function CallbackHandler() {
                     align-items: center;
                     justify-content: center;
                     z-index: 50;
+                    padding: 16px;
                 }
 
                 .callback-bg {
@@ -87,6 +88,8 @@ function CallbackHandler() {
 
                 .callback-card {
                     position: relative;
+                    width: 100%;
+                    max-width: 420px;
                     background: rgba(255, 255, 255, 0.55);
                     backdrop-filter: blur(24px);
                     -webkit-backdrop-filter: blur(24px);
@@ -96,6 +99,13 @@ function CallbackHandler() {
                     text-align: center;
                     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
                     animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+
+                @media (max-width: 480px) {
+                    .callback-card {
+                        padding: 32px 20px;
+                        border-radius: 20px;
+                    }
                 }
 
                 @keyframes cardIn {

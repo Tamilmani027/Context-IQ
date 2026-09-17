@@ -87,3 +87,29 @@ export function logoutUser() {
     localStorage.removeItem("token");
     document.cookie = "token=; path=/; max-age=0";
 }
+
+export async function forgotPassword(email) {
+    const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.detail || "Forgot password failed");
+    }
+    return data;
+}
+
+export async function resetPassword(token, new_password) {
+    const res = await fetch(`${API_BASE}/api/auth/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, new_password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.detail || "Password reset failed");
+    }
+    return data;
+}
