@@ -1,4 +1,4 @@
-# Document Intelligence Platform (Context-IQ)
+# Context-IQ - Document Intelligence Platform
 
 An end-to-end document intelligence system for books. The platform scrapes book data, stores it in MySQL, indexes descriptions with vector embeddings (ChromaDB), and answers natural-language questions using a local LLM via LM Studio. A Next.js frontend lets you browse books, view details and recommendations, and ask questions about the collection.
 
