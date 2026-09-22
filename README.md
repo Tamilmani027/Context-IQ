@@ -236,7 +236,3 @@ curl -X POST http://localhost:8000/api/books/upload \
 - Frontend API client points at `http://localhost:8000` (`frontend/lib/api.js`).
 - ChromaDB data is stored under `backend/chroma_db/` (local, gitignored).
 - Never commit `backend/.env` or virtual environments.
-
-## License
-
-This project is intended for educational / portfolio use.
