@@ -1,16 +1,9 @@
 @import "tailwindcss";
 
 
-*{
-  padding:0;
-  margin:0;
-  box-sizing: border-box;
 
-}
 
-html {
-  overflow-x: hidden;
-}
+
 
 :root {
   --background: #faf8f5;

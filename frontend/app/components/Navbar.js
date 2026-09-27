@@ -39,7 +39,7 @@ export default function Navbar() {
 
     return (
         <nav className="w-full bg-[#faf8f5] border-b border-[#e8e4df]">
-            <div className="w-full px-4 py-3 sm:px-6 lg:px-[45px] flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="w-full px-10 py-3 sm:px-6 lg:px-[45px] flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 {/* App Logo - Left side */}
                 <Link href="/books" className="flex items-center gap-2.5 cursor-pointer">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6e46e6] text-white shadow-sm">
@@ -66,22 +66,20 @@ export default function Navbar() {
                 <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5 sm:gap-2">
                     <Link href="/books">
                         <div
-                            className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${
-                                isBooks
-                                    ? "bg-[#e8e5e0] text-stone-900"
-                                    : "text-stone-600 hover:text-stone-900"
-                            }`}
+                            className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${isBooks
+                                ? "bg-[#e8e5e0] text-stone-900"
+                                : "text-stone-600 hover:text-stone-900"
+                                }`}
                         >
                             Books
                         </div>
                     </Link>
                     <Link href="/ask">
                         <div
-                            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                                isAsk
-                                    ? "bg-[#e8e5e0] text-stone-900 font-semibold"
-                                    : "text-stone-600 hover:text-stone-900"
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${isAsk
+                                ? "bg-[#e8e5e0] text-stone-900 font-semibold"
+                                : "text-stone-600 hover:text-stone-900"
+                                }`}
                         >
                             Ask AI
                         </div>

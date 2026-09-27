@@ -1,4 +1,12 @@
 /* Auth Layout Global Styles (to prevent styled-jsx App Router navigation load bugs) */
+body:has(.login-page-wrapper) main,
+body:has(.register-page-wrapper) main,
+body:has(.callback-wrapper) main,
+main:has(.login-page-wrapper),
+main:has(.register-page-wrapper),
+main:has(.callback-wrapper) {
+    padding: 0 !important;
+}
 
 /* ── Auth Navbar ────────────────────────────────────── */
 .auth-navbar {

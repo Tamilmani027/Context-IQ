@@ -4,13 +4,15 @@ import BookCard from "@/app/components/BookCard";
 
 const getGenreStyle = (genre) => {
   const value = genre?.toUpperCase() || "";
-  if (value.includes("GAME"))    return { color: "#2563eb", bg: "#ebf5ff" };
+  if (value.includes("GAME")) return { color: "#2563eb", bg: "#ebf5ff" };
   if (value.includes("ROMANCE")) return { color: "#db2777", bg: "#fdf2f8" };
   if (value.includes("POLITICAL")) return { color: "#16a34a", bg: "#f0fdf4" };
   if (value.includes("THRILLER")) return { color: "#dc2626", bg: "#fef2f2" };
-  if (value.includes("HISTORY") || value.includes("NON-FICTION")) return { color: "#0284c7", bg: "#f0f9ff" };
+  if (value.includes("HISTORY") || value.includes("NON-FICTION"))
+    return { color: "#0284c7", bg: "#f0f9ff" };
   if (value.includes("SELF HELP")) return { color: "#7c3aed", bg: "#faf5ff" };
-  if (value.includes("HISTORICAL")) return { color: "#ea580c", bg: "#fff7ed" };
+  if (value.includes("HISTORICAL"))
+    return { color: "#ea580c", bg: "#fff7ed" };
   return { color: "#57534e", bg: "#f5f5f4" };
 };
 
@@ -24,7 +26,7 @@ function StarRating({ rating }) {
         width="16"
         height="16"
         viewBox="0 0 24 24"
-        fill={i < filled ? "#f59e0b" : "#e7e5e4"}
+        fill={i < filled ? "#f59e0b" : "#d6d3d1"}
         xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -32,9 +34,11 @@ function StarRating({ rating }) {
     );
   }
   return (
-    <div className="flex items-center gap-0.5" aria-label={`${rating || 0} out of 5 stars`}>
+    <div
+      className="flex items-center gap-0.5"
+      aria-label={`${rating || 0} out of 5 stars`}
+    >
       {stars}
-      <span className="ml-1.5 text-sm text-stone-500">{rating}/5</span>
     </div>
   );
 }
@@ -71,12 +75,12 @@ export default async function BookDetail({ params }) {
 
       {/* Book Header */}
       <div className="mb-8">
-        {/* Genre Badge */}
+        {/* Genre — plain uppercase colored text */}
         {book?.genre && (
-          <div className="mb-3">
+          <div className="mb-2">
             <span
-              className="inline-block rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest"
-              style={{ color: genreStyle.color, backgroundColor: genreStyle.bg }}
+              className="inline-block text-[9px] font-bold uppercase tracking-widest"
+              style={{ color: genreStyle.color }}
             >
               {book.genre}
             </span>
@@ -92,13 +96,14 @@ export default async function BookDetail({ params }) {
         </h1>
 
         {/* Author */}
-        <p className="mb-4 text-sm text-stone-500">
+        <p className="mb-4 text-sm" style={{ color: "#57534e" }}>
           {book?.author || "Unknown Author"}
         </p>
 
-        {/* Rating + meta row */}
-        <div className="flex flex-wrap items-center gap-3 text-sm text-stone-500">
+        {/* Rating + price + reviews */}
+        <div className="flex flex-wrap items-center gap-2 text-sm text-stone-500">
           <StarRating rating={book?.rating} />
+          <span className="text-stone-500">{book?.rating}/5</span>
           <span className="text-stone-300">·</span>
           <span className="font-semibold text-stone-800">£{book?.price}</span>
           <span className="text-stone-300">·</span>
@@ -107,72 +112,90 @@ export default async function BookDetail({ params }) {
       </div>
 
       {/* Content Cards */}
-      <div className="space-y-5">
+      <div className="space-y-4">
         {/* Description Card */}
         <div
-          className="rounded-2xl border bg-white p-6 shadow-sm sm:p-7"
+          className="rounded-xl border bg-white p-5 sm:p-6"
           style={{ borderColor: "#e8e4df" }}
         >
-          <h2
-            className="mb-3 text-lg font-bold text-stone-900"
-            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-          >
+          <h2 className="mb-3 text-base font-bold text-stone-900">
             Description
           </h2>
           <p className="text-sm leading-relaxed text-stone-600">
-            {book?.description
-              ? `${book.description} ...more`
-              : "No description available"}
+            {book?.description ? (
+              <>
+                {book.description}{" "}
+                <span className="cursor-pointer text-stone-400 hover:underline">
+                  ...more
+                </span>
+              </>
+            ) : (
+              "No description available"
+            )}
           </p>
         </div>
 
         {/* Book Info Card */}
         <div
-          className="rounded-2xl border bg-white p-6 shadow-sm sm:p-7"
+          className="rounded-xl border bg-white p-5 sm:p-6"
           style={{ borderColor: "#e8e4df" }}
         >
-          <h2
-            className="mb-6 text-lg font-bold text-stone-900"
-            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-          >
-            Book Info
-          </h2>
+          <h2 className="mb-5 text-base font-bold text-stone-900">Book Info</h2>
 
-          <div className="mb-6 grid grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6">
+          {/* 4-col info grid */}
+          <div className="mb-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
             <div>
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">UPC</div>
-              <div className="break-all text-sm text-stone-700">{book?.upc || "—"}</div>
+              <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
+                UPC
+              </div>
+              <div className="break-all text-sm text-stone-700">
+                {book?.upc || "—"}
+              </div>
             </div>
             <div>
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">AVAILABILITY</div>
+              <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
+                AVAILABILITY
+              </div>
               <div className="flex items-center gap-1.5 text-sm font-medium text-emerald-600">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 {book?.availability !== false ? "In Stock" : "Out of Stock"}
               </div>
             </div>
             <div>
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">STOCK</div>
-              <div className="text-sm text-stone-700">22 units</div>
+              <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
+                STOCK
+              </div>
+              <div className="text-sm text-stone-700">
+                {book?.num_available != null
+                  ? `${book.num_available} units`
+                  : "22 units"}
+              </div>
             </div>
             <div>
-              <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">REVIEWS</div>
-              <div className="text-sm text-stone-700">{book?.num_reviews || 0} reviews</div>
+              <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
+                REVIEWS
+              </div>
+              <div className="text-sm text-stone-700">
+                {book?.num_reviews || 0} reviews
+              </div>
             </div>
           </div>
 
-          <div className="mb-5">
-            <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">PRICE</div>
-            <div
-              className="text-2xl font-bold text-stone-900"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-            >
+          {/* Price */}
+          <div className="mb-4">
+            <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
+              PRICE
+            </div>
+            <div className="text-2xl font-bold text-stone-900">
               £{book?.price}
             </div>
           </div>
 
+          {/* Add to Cart */}
           <button
             type="button"
-            className="rounded-lg bg-[#6e46e6] px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#5b36d6] cursor-pointer"
+            className="rounded-lg px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-opacity cursor-pointer hover:opacity-90"
+            style={{ backgroundColor: "#6e46e6" }}
           >
             Add to Cart
           </button>
@@ -180,14 +203,17 @@ export default async function BookDetail({ params }) {
 
         {/* AI Summary Card */}
         <div
-          className="rounded-2xl border p-5 sm:p-6 shadow-sm"
+          className="rounded-xl border p-5 sm:p-6"
           style={{ borderColor: "#ede9fe", backgroundColor: "#f6f3ff" }}
         >
-          <div className="mb-2.5 flex items-center gap-2" style={{ color: "#6e46e6" }}>
+          <div
+            className="mb-2.5 flex items-center gap-2"
+            style={{ color: "#6e46e6" }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -200,20 +226,26 @@ export default async function BookDetail({ params }) {
               <path d="m8.5 14 7-4" />
               <path d="m8.5 10 7 4" />
             </svg>
-            <h3 className="text-sm font-semibold sm:text-base" style={{ color: "#6e46e6" }}>
+            <h3
+              className="text-sm font-semibold"
+              style={{ color: "#6e46e6" }}
+            >
               AI Summary
             </h3>
           </div>
-          <p className="text-sm leading-relaxed" style={{ color: "rgba(110,70,230,0.9)" }}>
+          <p
+            className="text-sm leading-relaxed"
+            style={{ color: "rgba(110,70,230,0.85)" }}
+          >
             {book?.summary ||
               (book?.description
-                ? `${book.title} by ${book.author} — ${book.description.substring(0, 160)}.`
+                ? `${book.title} by ${book.author} — ${book.description.substring(0, 200)}.`
                 : `${book?.title} by ${book?.author}`)}
           </p>
         </div>
       </div>
 
-      {/* Similar Books Section */}
+      {/* Similar Books */}
       {recommendations && recommendations.length > 0 && (
         <section className="mt-14">
           <h2
@@ -232,4 +264,3 @@ export default async function BookDetail({ params }) {
     </div>
   );
 }
-
