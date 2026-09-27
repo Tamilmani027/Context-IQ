@@ -1,4 +1,4 @@
-# Document Intelligence Platform (Context-IQ)
+# Context-IQ - Document Intelligence Platform
 
 An end-to-end document intelligence system for books. The platform scrapes book data, stores it in MySQL, indexes descriptions with vector embeddings (ChromaDB), and answers natural-language questions using a local LLM via LM Studio. A Next.js frontend lets you browse books, view details and recommendations, and ask questions about the collection.
 
@@ -236,7 +236,3 @@ curl -X POST http://localhost:8000/api/books/upload \
 - Frontend API client points at `http://localhost:8000` (`frontend/lib/api.js`).
 - ChromaDB data is stored under `backend/chroma_db/` (local, gitignored).
 - Never commit `backend/.env` or virtual environments.
-
-## License
-
-This project is intended for educational / portfolio use.
