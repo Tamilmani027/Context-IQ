@@ -79,6 +79,7 @@
 .register-page-wrapper {
     position: relative;
     min-height: 100dvh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;

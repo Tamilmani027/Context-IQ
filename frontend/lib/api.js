@@ -1,4 +1,6 @@
-const API_BASE = "http://localhost:8000";
+// Use IPv4 explicitly: the FastAPI dev server listens on IPv4, while Node's
+// server-side fetch can otherwise resolve localhost to an unavailable IPv6 address.
+const API_BASE = "http://127.0.0.1:8000";
 
 // ── Helper: get auth header ──────────────────────────
 

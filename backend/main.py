@@ -5,7 +5,7 @@ from routers import books, qa, auth, oauth
 app=FastAPI(title='Context-IQ')
 
 app.add_middleware(CORSMiddleware,
-allow_origins=["http://localhost:3001"],
+allow_origins=["http://localhost:3000", "http://localhost:3001"],
 allow_methods=["*"],
 allow_credentials=True,
 allow_headers=["*"]

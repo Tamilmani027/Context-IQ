@@ -39,7 +39,7 @@ export default function Navbar() {
 
     return (
         <nav className="w-full bg-[#faf8f5] border-b border-[#e8e4df]">
-            <div className="w-full max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="w-full px-4 py-3 sm:px-6 lg:px-[45px] flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 {/* App Logo - Left side */}
                 <Link href="/books" className="flex items-center gap-2.5 cursor-pointer">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6e46e6] text-white shadow-sm">

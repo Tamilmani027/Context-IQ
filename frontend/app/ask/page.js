@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { askQuestion } from "@/lib/api";
 
@@ -14,9 +15,8 @@ export default function AskPage() {
     setError(null);
     setAnswer(null);
     try {
-      const result = await askQuestion(question);
-      setAnswer(result);
-    } catch (e) {
+      setAnswer(await askQuestion(question));
+    } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -24,59 +24,35 @@ export default function AskPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl min-w-0">
-      <h1 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">Ask AI About Books</h1>
-      <p className="mb-6 text-gray-500">Ask anything about the books in our collection.</p>
+    <section className="mx-auto w-full max-w-4xl pb-14 pt-4">
+      <header className="mb-8">
+        <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[#f0ebff] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#6e46e6]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#6e46e6]" /> Knowledge assistant
+        </span>
+        <h1 className="mb-2 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+          Ask AI about books
+        </h1>
+        <p className="text-sm leading-relaxed text-stone-500">Ask anything about the books in your collection and get a sourced answer.</p>
+      </header>
 
-      {/* Question Input Card */}
-      <div className="rounded-xl bg-gray-800 p-4 sm:p-6">
-        <textarea
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask anything about books..."
-          aria-label="Question"
-          className="w-full bg-gray-700 text-white rounded-lg p-4 resize-none h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          onClick={handleAsk}
-          disabled={loading}
-          className="mt-4 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-        >
-          {loading ? "Thinking..." : "Ask AI"}
-        </button>
+      <div className="rounded-2xl border border-[#e8e4df] bg-white p-5 shadow-sm sm:p-7">
+        <label htmlFor="question" className="mb-2 block text-sm font-semibold text-stone-800">Your question</label>
+        <textarea id="question" value={question} onChange={(e) => setQuestion(e.target.value)} onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleAsk(); }} placeholder="For example, which book would you recommend for a historical fiction fan?" aria-label="Question" className="h-36 w-full resize-none rounded-xl border border-[#e4dfd8] bg-[#fdfcfb] p-4 text-sm leading-relaxed text-stone-800 outline-none transition focus:border-[#a88df2] focus:ring-4 focus:ring-[#ede7ff]" />
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-stone-400">Press Ctrl + Enter to ask</p>
+          <button onClick={handleAsk} disabled={loading || !question.trim()} className="rounded-lg bg-[#6e46e6] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#5b36d6] disabled:cursor-not-allowed disabled:opacity-50">{loading ? "Thinking…" : "Ask AI"}</button>
+        </div>
       </div>
 
-      {/* Answer Display */}
       {answer && (
-        <div className="bg-gray-800 rounded-xl p-6 mt-6">
-          <h2 className="text-white font-semibold text-lg mb-3">Answer</h2>
-          <p className="break-words whitespace-pre-wrap text-gray-300">{answer.answer}</p>
-
-          {/* Source Books */}
-          {answer.source_books && answer.source_books.length > 0 && (
-            <div className="mt-4">
-              <p className="text-gray-400 mb-2">Sources:</p>
-              <div className="flex flex-wrap gap-2">
-                {answer.source_books.map((book, i) => (
-                  <span
-                    key={i}
-                    className="max-w-full break-words rounded-full bg-blue-600/20 px-3 py-1 text-sm text-blue-400"
-                  >
-                    {book}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        <section className="mt-6 rounded-2xl border border-[#e8e4df] bg-white p-5 shadow-sm sm:p-7">
+          <div className="mb-4 flex items-center gap-2 text-[#6e46e6]"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#f0ebff] text-sm">✦</span><h2 className="text-base font-bold text-stone-900">Answer</h2></div>
+          <p className="break-words whitespace-pre-wrap text-sm leading-7 text-stone-600">{answer.answer}</p>
+          {answer.source_books?.length > 0 && <div className="mt-6 border-t border-[#eeeae5] pt-5"><p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-stone-400">Sources</p><div className="flex flex-wrap gap-2">{answer.source_books.map((book, i) => <span key={i} className="max-w-full break-words rounded-full bg-[#f4f1ec] px-3 py-1.5 text-xs font-medium text-stone-600">{book}</span>)}</div></div>}
+        </section>
       )}
 
-      {/* Error Display */}
-      {error && (
-        <div className="bg-red-900/20 border border-red-500 rounded-xl p-4 mt-6 text-red-400">
-          {error}
-        </div>
-      )}
-    </div>
+      {error && <div role="alert" className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>}
+    </section>
   );
 }
