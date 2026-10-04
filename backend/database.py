@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Explicitly specify the path to the .env file in the backend directory
 env_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path, override=True)
 
 host = os.getenv("DB_HOST", "localhost")
 port = int(os.getenv("DB_PORT", "3306"))
