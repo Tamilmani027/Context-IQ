@@ -3,7 +3,9 @@
 
 
 
-
+html {
+  overflow-x: hidden;
+}
 
 :root {
   --background: #faf8f5;
