@@ -1,3 +1,4 @@
+import os
 import requests
 from typing import List, Dict, Any
 
@@ -51,16 +52,32 @@ def generate_answer(question: str, context_chunks: List[str], book_ids: List[int
         "Answer based on the context provided. Cite which books you referenced."
     )
 
+    llm_api_key = os.getenv("LLM_API_KEY")
+    llm_model = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+
+    if llm_api_key:
+        api_url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {llm_api_key}",
+            "Content-Type": "application/json"
+        }
+        chosen_model = llm_model
+    else:
+        api_url = "http://localhost:1234/v1/chat/completions"
+        headers = {"Content-Type": "application/json"}
+        chosen_model = "mistralai/mistral-7b-instruct-v0.3"
+
     payload = {
-        "model": "mistralai/mistral-7b-instruct-v0.3",
+        "model": chosen_model,
         "messages": [
-                    {"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},],
+            {"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},
+        ],
         "temperature": 0.7,
         "max_tokens": 500,
     }
 
-    resp = requests.post("http://localhost:1234/v1/chat/completions", json=payload)
     try:
+        resp = requests.post(api_url, json=payload, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
         answer_text = data["choices"][0]["message"]["content"]
