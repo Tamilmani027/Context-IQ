@@ -1,11 +1,9 @@
 "use client";
 import { useState } from "react";
-import { loginUser } from "@/lib/api";
+import { loginUser, API_BASE } from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthNavbar from "../AuthNavbar";
-
-const API_BASE = "http://localhost:8000";
 
 export default function LoginPage() {
     const router = useRouter();

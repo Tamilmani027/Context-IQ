@@ -1,7 +1,7 @@
 // Use NEXT_PUBLIC_API_URL in production (set in Vercel dashboard).
 // Falls back to local FastAPI server during development.
 const rawApiBase = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-const API_BASE = rawApiBase.replace(/\/+$/, "");
+export const API_BASE = rawApiBase.replace(/\/+$/, "");
 
 // ── Helper: get auth header ──────────────────────────
 
