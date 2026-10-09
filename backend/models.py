@@ -38,15 +38,8 @@ class BookChunk(Base):
     chunk_index = Column(Integer, nullable=False)
     chroma_id = Column(String(128), nullable=False)
 
-Base.metadata.create_all(bind=engine)
-
-
 def upgrade_existing_users_table():
-    """Add auth columns introduced after the original users table was created.
-
-    ``create_all`` deliberately does not alter existing tables, so local databases
-    created before password-reset support need this small forward-only upgrade.
-    """
+    """Add auth columns introduced after the original users table was created."""
     inspector = inspect(engine)
     user_columns = {column["name"] for column in inspector.get_columns("users")}
 
@@ -56,13 +49,20 @@ def upgrade_existing_users_table():
         if "reset_token_expires" not in user_columns:
             connection.execute(text("ALTER TABLE users ADD COLUMN reset_token_expires DATETIME NULL"))
 
-    # Keep the model's indexed field and the existing database schema aligned.
     indexes = {index["name"] for index in inspect(engine).get_indexes("users")}
     if "ix_users_reset_token" not in indexes:
         with engine.begin() as connection:
             connection.execute(text("CREATE INDEX ix_users_reset_token ON users (reset_token)"))
 
 
-upgrade_existing_users_table()
+def init_db():
+    try:
+        Base.metadata.create_all(bind=engine)
+        upgrade_existing_users_table()
+    except Exception as e:
+        print(f"Warning: Database initialization failed on startup: {e}")
+
+
+init_db()
 
 
