@@ -9,19 +9,15 @@ from routers import books, qa, auth, oauth
 
 app=FastAPI(title='Context-IQ')
 
-allowed_origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://context-iq-nu.vercel.app",
+origins = [
+    "https://context-iq-nu.vercel.app",  # your frontend domain
 ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_origin_regex=r"https://.*\.vercel\.app",
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+app.add_middleware(CORSMiddleware,
+allow_origins=origins,
+allow_methods=["*"],
+allow_credentials=True,
+allow_headers=["*"]
 )
 
 app.include_router(books.router)
