@@ -1,6 +1,6 @@
-// Use IPv4 explicitly: the FastAPI dev server listens on IPv4, while Node's
-// server-side fetch can otherwise resolve localhost to an unavailable IPv6 address.
-const API_BASE = "http://127.0.0.1:8000";
+// Use NEXT_PUBLIC_API_URL in production (set in Vercel dashboard).
+// Falls back to local FastAPI server during development.
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 // ── Helper: get auth header ──────────────────────────
 
