@@ -12,18 +12,38 @@ function authHeaders() {
 // ── Books ────────────────────────────────────────────
 
 export async function getAllBooks() {
-    const res = await fetch(`${API_BASE}/api/books/`);
-    return res.json();
+    try {
+        const res = await fetch(`${API_BASE}/api/books/`, { cache: "no-store" });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+    } catch (err) {
+        console.error("Error fetching books:", err);
+        return [];
+    }
 }
 
 export async function getBook(id) {
-    const res = await fetch(`${API_BASE}/api/books/${id}`);
-    return res.json();
+    try {
+        const res = await fetch(`${API_BASE}/api/books/${id}`, { cache: "no-store" });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (err) {
+        console.error(`Error fetching book ${id}:`, err);
+        return null;
+    }
 }
 
 export async function getRecommendations(id) {
-    const res = await fetch(`${API_BASE}/api/books/${id}/recommendations`);
-    return res.json();
+    try {
+        const res = await fetch(`${API_BASE}/api/books/${id}/recommendations`, { cache: "no-store" });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+    } catch (err) {
+        console.error(`Error fetching recommendations for book ${id}:`, err);
+        return [];
+    }
 }
 
 // ── Ask (protected) ──────────────────────────────────

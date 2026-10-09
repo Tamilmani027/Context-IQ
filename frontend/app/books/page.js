@@ -98,8 +98,11 @@ function CollectionCard({ book }) {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function BooksPage() {
   const books = await getAllBooks();
+  const bookList = Array.isArray(books) ? books : [];
 
   return (
     <section className="w-full">
@@ -117,11 +120,17 @@ export default async function BooksPage() {
       </header>
 
       {/* Book grid */}
-      <div className="grid items-stretch grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {books.map((book) => (
-          <CollectionCard key={book.id} book={book} />
-        ))}
-      </div>
+      {bookList.length === 0 ? (
+        <div className="py-16 text-center text-stone-500">
+          No books available at the moment.
+        </div>
+      ) : (
+        <div className="grid items-stretch grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {bookList.map((book) => (
+            <CollectionCard key={book.id} book={book} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -43,10 +43,13 @@ function StarRating({ rating }) {
   );
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function BookDetail({ params }) {
   const { id } = await params;
   const book = await getBook(id);
   const recommendations = await getRecommendations(id);
+  const recList = Array.isArray(recommendations) ? recommendations : [];
 
   const genreStyle = getGenreStyle(book?.genre);
 
@@ -246,7 +249,7 @@ export default async function BookDetail({ params }) {
       </div>
 
       {/* Similar Books */}
-      {recommendations && recommendations.length > 0 && (
+      {recList.length > 0 && (
         <section className="mt-14">
           <h2
             className="mb-6 text-2xl font-bold text-stone-900"
@@ -255,7 +258,7 @@ export default async function BookDetail({ params }) {
             Similar Books
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {recommendations.map((rec) => (
+            {recList.map((rec) => (
               <BookCard key={rec.id} book={rec} />
             ))}
           </div>
