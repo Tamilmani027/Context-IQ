@@ -1,6 +1,10 @@
 import os
 import requests
 from typing import List, Dict, Any
+from dotenv import load_dotenv
+
+env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path=env_path, override=True)
 
 from services.embeddings import generate_embeddings, setup_chromadb
 from models import Book
@@ -78,11 +82,13 @@ def generate_answer(question: str, context_chunks: List[str], book_ids: List[int
 
     try:
         resp = requests.post(api_url, json=payload, headers=headers, timeout=30)
+        if not resp.ok:
+            print(f"[LLM Error] API {api_url} returned status {resp.status_code}: {resp.text}")
         resp.raise_for_status()
         data = resp.json()
         answer_text = data["choices"][0]["message"]["content"]
     except Exception as e:
-        # If the LM call fails or returns unexpected shape, fall back to an informative message
+        print(f"[LLM Exception] Failed to call {api_url}: {e}")
         answer_text = "Could not get an answer from the language model."
 
     return {"answer": answer_text, "source_books": source_books}
