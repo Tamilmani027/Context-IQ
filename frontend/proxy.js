@@ -4,8 +4,8 @@ export function proxy(request) {
     const token = request.cookies.get("token")?.value;
     const { pathname } = request.nextUrl;
 
-    // Allow auth pages through (login, register)
-    if (pathname.startsWith("/auth")) {
+    // Allow landing page and auth pages through (login, register)
+    if (pathname === "/" || pathname.startsWith("/auth")) {
         return NextResponse.next();
     }
 

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import MainWrapper from "./components/MainWrapper";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -22,9 +23,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geist.className} bg-[#faf8f5] min-h-screen`}>
         <Navbar />
-        <main className="w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-[45px]">
+        <MainWrapper>
           {children}
-        </main>
+        </MainWrapper>
       </body>
     </html>
   );
