@@ -31,8 +31,8 @@ export default function Navbar() {
         router.push("/");
     }
 
-    // Hide navbar on auth pages
-    if (pathname?.startsWith("/auth")) return null;
+    // Hide navbar on auth pages and landing page
+    if (pathname === "/" || pathname?.startsWith("/auth")) return null;
 
     const isBooks = pathname?.startsWith("/books") || pathname === "/";
     const isAsk = pathname?.startsWith("/ask");

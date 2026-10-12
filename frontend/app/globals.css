@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
-
-
-
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 :root {
   --background: #faf8f5;
   --foreground: #171717;
+  --font-serif-editorial: 'Newsreader', 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 @theme inline {
@@ -24,4 +23,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   min-width: 0;
+}
+
+.font-editorial {
+  font-family: var(--font-serif-editorial);
+}
+
+/* Landing page full-width override to bypass root main padding */
+body:has(.landing-page-root) main,
+main:has(.landing-page-root) {
+  padding: 0 !important;
+  max-width: 100% !important;
 }
