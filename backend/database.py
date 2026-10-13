@@ -35,7 +35,14 @@ else:
             "ssl": {}
         }
 
-engine = create_engine(url, connect_args=connect_args)
+engine = create_engine(
+    url,
+    connect_args=connect_args,
+    pool_pre_ping=True,
+    pool_recycle=180,
+    pool_size=5,
+    max_overflow=10,
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 

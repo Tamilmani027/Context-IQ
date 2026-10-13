@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 import secrets
 from datetime import datetime, timedelta
 
-from database import get_db
+from database import get_db, SessionLocal
+from sqlalchemy.exc import OperationalError
 from models import User
 from schemas import UserCreate, UserResponse, Token, ForgotPasswordRequest, ResetPasswordRequest
 from auth import hash_password, verify_password, create_access_token, get_current_user
@@ -34,7 +35,12 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 def login(user_data: UserCreate, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == user_data.email).first()
+    try:
+        user = db.query(User).filter(User.email == user_data.email).first()
+    except OperationalError:
+        db.close()
+        db = SessionLocal()
+        user = db.query(User).filter(User.email == user_data.email).first()
     if not user or not verify_password(user_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
