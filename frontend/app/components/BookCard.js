@@ -84,13 +84,6 @@ export default function BookCard({ book }) {
           <StarRating rating={book.rating} />
         </div>
 
-        {/* Price + rating inline */}
-        <div className="mb-2 flex items-baseline gap-1.5">
-          <span className="text-xs font-bold text-stone-900">
-            £{book.price}
-          </span>
-        </div>
-
         {/* Description snippet */}
         {book.description && (
           <p className="mt-auto text-[10px] leading-relaxed text-stone-400 line-clamp-3">

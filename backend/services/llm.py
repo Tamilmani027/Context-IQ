@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 from typing import List, Dict, Any
 from dotenv import load_dotenv
@@ -56,39 +57,74 @@ def generate_answer(question: str, context_chunks: List[str], book_ids: List[int
         "Answer based on the context provided. Cite which books you referenced."
     )
 
+    llm_provider = os.getenv("LLM_PROVIDER", "groq").lower().strip()
     llm_api_key = os.getenv("LLM_API_KEY")
-    llm_model = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+    llm_model = os.getenv("LLM_MODEL")
 
-    if llm_api_key:
+    if llm_provider == "gemini" and llm_api_key:
+        # Gemini exposes an OpenAI-compatible chat/completions endpoint.
+        api_url = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {llm_api_key}",
+            "Content-Type": "application/json"
+        }
+        chosen_model = llm_model or "gemini-2.0-flash"
+    elif llm_api_key:
         api_url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {
             "Authorization": f"Bearer {llm_api_key}",
             "Content-Type": "application/json"
         }
-        chosen_model = llm_model
+        chosen_model = llm_model or "llama-3.1-8b-instant"
     else:
         api_url = "http://localhost:1234/v1/chat/completions"
         headers = {"Content-Type": "application/json"}
         chosen_model = "mistralai/mistral-7b-instruct-v0.3"
 
-    payload = {
-        "model": chosen_model,
-        "messages": [
-            {"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},
-        ],
-        "temperature": 0.7,
-        "max_tokens": 500,
-    }
-
-    try:
-        resp = requests.post(api_url, json=payload, headers=headers, timeout=30)
-        if not resp.ok:
-            print(f"[LLM Error] API {api_url} returned status {resp.status_code}: {resp.text}")
-        resp.raise_for_status()
-        data = resp.json()
-        answer_text = data["choices"][0]["message"]["content"]
-    except Exception as e:
-        print(f"[LLM Exception] Failed to call {api_url}: {e}")
+    if llm_provider == "gemini" and llm_api_key:
+        chosen_model = llm_model or "gemini-3.1-flash-lite"
+        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{chosen_model}:generateContent?key={llm_api_key}"
+        answer_text = "Could not get an answer from the language model."
+        gemini_payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.7, "maxOutputTokens": 500},
+        }
+        for attempt in range(3):
+            try:
+                resp = requests.post(api_url, json=gemini_payload, headers={"Content-Type": "application/json"}, timeout=60)
+                if not resp.ok:
+                    print(f"[LLM Error] API {api_url} returned status {resp.status_code}: {resp.text}")
+                    if resp.status_code in (429, 503) and attempt < 2:
+                        time.sleep(2 ** attempt)
+                        continue
+                resp.raise_for_status()
+                data = resp.json()
+                answer_text = data["candidates"][0]["content"]["parts"][0]["text"]
+                break
+            except Exception as e:
+                print(f"[LLM Exception] Failed to call {api_url}: {e}")
+                if attempt < 2:
+                    time.sleep(2 ** attempt)
+                    continue
+    else:
+        answer_text = "Could not get an answer from the language model."
+        payload = {
+            "model": chosen_model,
+            "messages": [
+                {"role": "user", "content": f"You are a helpful book assistant.\n\n{prompt}"},
+            ],
+            "temperature": 0.7,
+            "max_tokens": 500,
+        }
+        try:
+            resp = requests.post(api_url, json=payload, headers=headers, timeout=120)
+            if not resp.ok:
+                print(f"[LLM Error] API {api_url} returned status {resp.status_code}: {resp.text}")
+            resp.raise_for_status()
+            data = resp.json()
+            answer_text = data["choices"][0]["message"]["content"]
+        except Exception as e:
+            print(f"[LLM Exception] Failed to call {api_url}: {e}")
         answer_text = "Could not get an answer from the language model."
 
     return {"answer": answer_text, "source_books": source_books}

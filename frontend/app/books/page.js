@@ -84,9 +84,6 @@ function CollectionCard({ book }) {
           <StarRating rating={book.rating} />
         </div>
 
-        {/* Price */}
-        <p className="mb-3 text-sm font-bold text-stone-900">£{book.price}</p>
-
         {/* Description preview */}
         {book.description && (
           <p className="mt-auto text-[11px] leading-relaxed text-stone-400 line-clamp-3">

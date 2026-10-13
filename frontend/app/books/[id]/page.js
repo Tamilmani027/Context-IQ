@@ -108,8 +108,6 @@ export default async function BookDetail({ params }) {
           <StarRating rating={book?.rating} />
           <span className="text-stone-500">{book?.rating}/5</span>
           <span className="text-stone-300">·</span>
-          <span className="font-semibold text-stone-800">£{book?.price}</span>
-          <span className="text-stone-300">·</span>
           <span>{book?.num_reviews || 0} reviews</span>
         </div>
       </div>
@@ -184,24 +182,6 @@ export default async function BookDetail({ params }) {
             </div>
           </div>
 
-          {/* Price */}
-          <div className="mb-4">
-            <div className="mb-1 text-[9px] font-bold uppercase tracking-wider text-stone-400">
-              PRICE
-            </div>
-            <div className="text-2xl font-bold text-stone-900">
-              £{book?.price}
-            </div>
-          </div>
-
-          {/* Add to Cart */}
-          <button
-            type="button"
-            className="rounded-lg px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-opacity cursor-pointer hover:opacity-90"
-            style={{ backgroundColor: "#6e46e6" }}
-          >
-            Add to Cart
-          </button>
         </div>
 
         {/* AI Summary Card */}

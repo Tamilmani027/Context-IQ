@@ -67,6 +67,7 @@ export default function AskPage() {
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleAsk();
           }}
           placeholder="For example, which book would you recommend for a historical fiction fan?"
+          maxLength={500}
           aria-label="Question"
           className="h-36 w-full resize-none rounded-xl border p-4 text-sm leading-relaxed text-stone-800 outline-none transition focus:ring-4"
           style={{
@@ -75,7 +76,7 @@ export default function AskPage() {
           }}
         />
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-stone-400">Press Ctrl + Enter to ask</p>
+          <p className="text-xs text-stone-400">Press Ctrl + Enter to ask · {question.length}/500</p>
           <button
             onClick={handleAsk}
             disabled={loading || !question.trim()}
