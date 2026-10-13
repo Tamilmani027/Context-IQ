@@ -41,100 +41,6 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page-root min-h-screen bg-[#F4F0EB] text-[#1C1A17] font-sans antialiased selection:bg-[#E2DDD3] selection:text-[#1C1A17]">
-      {/* ── Top Navigation Bar ───────────────────────────────── */}
-      <header className="sticky top-0 z-40 w-full border-b border-[#E5DFD5] bg-[#F4F0EB]/90 backdrop-blur-md transition-all">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-12">
-          {/* Brand Logo */}
-          <Link href="/" className="group flex items-center gap-2.5 transition-opacity hover:opacity-85">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#1C1A17] transition-transform duration-200 group-hover:scale-105"
-            >
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-            </svg>
-            <span className="font-editorial text-2xl font-bold tracking-tight text-[#1C1A17]">
-              Context-IQ
-            </span>
-          </Link>
-
-          {/* Navigation Links & Auth Actions */}
-          <nav className="flex items-center gap-3 sm:gap-6">
-            <a
-              href="#how-it-works"
-              className="hidden text-sm font-medium text-[#5C564E] transition-colors hover:text-[#1C1A17] sm:inline-block"
-            >
-              How it works
-            </a>
-
-            {authChecked && (
-              <>
-                {user ? (
-                  <div className="flex items-center gap-3">
-                    <Link
-                      href="/books"
-                      className="hidden text-sm font-medium text-[#5C564E] transition-colors hover:text-[#1C1A17] md:inline-block"
-                    >
-                      Browse Books
-                    </Link>
-                    <Link
-                      href="/ask"
-                      className="hidden text-sm font-medium text-[#5C564E] transition-colors hover:text-[#1C1A17] md:inline-block"
-                    >
-                      Ask AI
-                    </Link>
-                    <span className="hidden max-w-[150px] truncate text-xs text-[#7A746B] lg:inline-block">
-                      {user.email}
-                    </span>
-                    <Link
-                      href="/books"
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-[#2A352B] px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-[#1E271F] hover:shadow"
-                    >
-                      <span>Dashboard</span>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="rounded-lg border border-[#D5CEC4] bg-transparent px-3 py-1.5 text-xs font-medium text-[#5C564E] transition-colors hover:bg-[#EAE4D9] hover:text-[#1C1A17]"
-                    >
-                      Log out
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2.5 sm:gap-3">
-                    <Link
-                      href="/auth/register"
-                      className="text-sm font-medium text-[#5C564E] transition-colors hover:text-[#1C1A17] px-2 py-1.5"
-                    >
-                      Sign Up
-                    </Link>
-                    <Link
-                      href="/auth/login"
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[#D1CCC2] bg-transparent px-4 py-2 text-sm font-medium text-[#1C1A17] transition-all hover:bg-[#EAE4D9] hover:border-[#BDB5A8]"
-                    >
-                      <span>Log in</span>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </Link>
-                  </div>
-                )}
-              </>
-            )}
-          </nav>
-        </div>
-      </header>
 
       {/* ── Main Container ──────────────────────────────────── */}
       <main className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12">
@@ -373,7 +279,7 @@ export default function LandingPage() {
         </section>
 
         {/* ── Section 2: A More Thoughtful Way to Explore ─────── */}
-        <section id="how-it-works" className="border-t border-[#E3DDD4] pt-14 pb-20 sm:pt-16 sm:pb-24">
+        <section id="how-it-works" className="relative left-1/2 w-screen -translate-x-1/2 border-t border-[#E3DDD4] bg-[#d5ddd2] px-6 py-14 sm:px-10 sm:py-16 lg:px-12 lg:pb-24">
           {/* Header Row */}
           <div className="flex flex-col justify-between gap-2 pb-10 sm:flex-row sm:items-center">
             <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#7A746B]">
@@ -477,56 +383,57 @@ export default function LandingPage() {
         </section>
 
         {/* ── Section 4: Footer ───────────────────────────────── */}
-        <footer className="border-t border-[#E3DDD4] py-10">
-          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-[#1C1A17]"
-              >
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-              </svg>
-              <span className="font-editorial text-xl font-bold tracking-tight text-[#1C1A17]">
-                Context-IQ
-              </span>
-            </Link>
-
-            {/* Tagline */}
-            <div className="font-editorial text-base italic text-[#6E685F]">
-              Good questions lead to good books.
-            </div>
-
-            {/* Auth Links */}
-            <div className="flex items-center gap-4 text-sm font-medium">
-              <Link
-                href="/auth/register"
-                className="text-[#5C564E] transition-colors hover:text-[#1C1A17]"
-              >
-                Sign Up
-              </Link>
-              <Link
-                href="/auth/login"
-                className="inline-flex items-center gap-1 text-[#1C1A17] transition-colors hover:text-[#2A352B] hover:underline"
-              >
-                <span>Log in to Context-IQ</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </footer>
       </main>
+      <footer className="border-t border-white/10 bg-[#313F3B] py-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 sm:flex-row sm:px-10 lg:px-12">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-white"
+            >
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg>
+            <span className="font-editorial text-xl font-bold tracking-tight text-white">
+              Context-IQ
+            </span>
+          </Link>
+
+          {/* Tagline */}
+          <div className="font-editorial text-base italic text-white/80">
+            Good questions lead to good books.
+          </div>
+
+          {/* Auth Links */}
+          <div className="flex items-center gap-4 text-sm font-medium">
+            <Link
+              href="/auth/register"
+              className="text-white/70 transition-colors hover:text-white"
+            >
+              Sign Up
+            </Link>
+            <Link
+              href="/auth/login"
+              className="inline-flex items-center gap-1 text-white transition-colors hover:text-white hover:underline"
+            >
+              <span>Log in to Context-IQ</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }

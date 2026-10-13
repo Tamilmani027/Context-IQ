@@ -3,7 +3,6 @@ import { useState } from "react";
 import { registerUser, API_BASE } from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import AuthNavbar from "../AuthNavbar";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -52,8 +51,7 @@ export default function RegisterPage() {
             {/* Background */}
             <div className="register-bg" />
 
-            {/* Auth Navbar */}
-            <AuthNavbar />
+            {/* Navbar is rendered globally from the root layout */}
 
             {/* Card */}
             <div className="register-card">

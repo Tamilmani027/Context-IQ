@@ -74,16 +74,7 @@ function CallbackHandler() {
                 .callback-bg {
                     position: absolute;
                     inset: 0;
-                    background:
-                        linear-gradient(180deg,
-                            rgba(180, 210, 240, 0.9) 0%,
-                            rgba(200, 220, 245, 0.7) 20%,
-                            rgba(220, 230, 250, 0.5) 40%,
-                            rgba(240, 240, 255, 0.3) 60%,
-                            rgba(210, 195, 180, 0.5) 80%,
-                            rgba(185, 165, 145, 0.7) 100%
-                        );
-                    background-color: #b4d2f0;
+                    background: #F4F0EB;
                 }
 
                 .callback-card {
@@ -161,7 +152,7 @@ function CallbackHandler() {
 export default function CallbackPage() {
     return (
         <Suspense fallback={
-            <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "#b4d2f0" }}>
+            <div style={{ position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "#F4F0EB" }}>
                 <p style={{ color: "#1a1a2e", fontSize: "1rem" }}>Loading...</p>
             </div>
         }>

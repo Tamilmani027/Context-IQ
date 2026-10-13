@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { forgotPassword } from "@/lib/api";
 import Link from "next/link";
-import AuthNavbar from "../AuthNavbar";
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState("");
@@ -30,8 +29,7 @@ export default function ForgotPasswordPage() {
             {/* Background */}
             <div className="login-bg" />
 
-            {/* Auth Navbar */}
-            <AuthNavbar />
+            {/* Navbar is rendered globally from the root layout */}
 
             {/* Card */}
             <div className="login-card">

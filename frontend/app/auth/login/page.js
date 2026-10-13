@@ -3,7 +3,6 @@ import { useState } from "react";
 import { loginUser, API_BASE } from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import AuthNavbar from "../AuthNavbar";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -41,8 +40,7 @@ export default function LoginPage() {
             {/* Background */}
             <div className="login-bg" />
 
-            {/* Auth Navbar */}
-            <AuthNavbar />
+            {/* Navbar is rendered globally from the root layout */}
 
             {/* Card */}
             <div className="login-card">

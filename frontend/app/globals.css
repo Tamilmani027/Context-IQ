@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
+
+
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 :root {
-  --background: #faf8f5;
-  --foreground: #171717;
+  --background: #F4F0EB;
+  --foreground: #1C1A17;
   --font-serif-editorial: 'Newsreader', 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
@@ -32,6 +34,6 @@ body {
 /* Landing page full-width override to bypass root main padding */
 body:has(.landing-page-root) main,
 main:has(.landing-page-root) {
-  padding: 0 !important;
+  padding: !important;
   max-width: 100% !important;
 }

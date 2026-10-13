@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={`${geist.className} bg-[#faf8f5] min-h-screen`}>
+      <body className={`${geist.className} bg-[#F4F0EB] min-h-screen`}>
         <Navbar />
         <MainWrapper>
           {children}

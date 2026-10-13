@@ -3,7 +3,6 @@ import { useState, Suspense } from "react";
 import { resetPassword } from "@/lib/api";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import AuthNavbar from "../AuthNavbar";
 
 function ResetPasswordForm() {
     const router = useRouter();
@@ -50,8 +49,7 @@ function ResetPasswordForm() {
             {/* Background */}
             <div className="login-bg" />
 
-            {/* Auth Navbar */}
-            <AuthNavbar />
+            {/* Navbar is rendered globally from the root layout */}
 
             {/* Card */}
             <div className="register-card">
@@ -164,7 +162,7 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
     return (
-        <Suspense fallback={<div className="login-page-wrapper"><div className="login-bg" /><AuthNavbar /></div>}>
+        <Suspense fallback={<div className="login-page-wrapper"><div className="login-bg" /></div>}>
             <ResetPasswordForm />
         </Suspense>
     );
